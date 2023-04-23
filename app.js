@@ -2,7 +2,12 @@ const express = require('express');// express file is imported using require
 const mongoose=require('mongoose');// importing mongoose
 const router=require("./routes/user-routes");
 
+
+const cookieParser=require('cookie-parser');
+
+
 const app=express();// app variable now have all functionality of express
+app.use(cookieParser());
 app.use(express.json());//this line will get to know that the upcoming data is json data
 app.use('/api',router);
 
