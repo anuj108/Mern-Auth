@@ -4,10 +4,14 @@ const router=require("./routes/user-routes");
 
 
 const cookieParser=require('cookie-parser');
-
+const cors=require('cors');//when we have to send data from one server to other server that is from localhost 3000  to 5000
 
 const app=express();// app variable now have all functionality of express
+
+app.use(cors({credentials:true,origin:"http://localhost:3000",}));//when the cookie is sent from backend it will require credential true and origin
+
 app.use(cookieParser());
+
 app.use(express.json());//this line will get to know that the upcoming data is json data
 app.use('/api',router);
 

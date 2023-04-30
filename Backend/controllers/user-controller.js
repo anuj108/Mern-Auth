@@ -9,7 +9,7 @@ const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
   //if we encounter same email again it will send request, to stop or validate(user already exists) that we will use validations
 
-  let existingUser;
+  let existingUser; 
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
@@ -53,6 +53,9 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email)
+  console.log(email)
+
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -72,24 +75,27 @@ const login = async (req, res, next) => {
   const token = jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
     expiresIn: "30s",
   });
-
   res.cookie(String(existingUser._id), token, {
-    path: "/",
-    expires: new Date(Date.now() + 1000 * 30),
+    // path: "/",
+    // expires: new Date(Date.now() + 1000 * 30),
     // if httponly is written , it will not be accesible to the frontend
+    // httpOnly: true,
+    // sameSite: "none", //idk
+    path: '/',
+    expires: new Date(Date.now() + 1000 * 30),
     httpOnly: true,
-    sameSite: "lax", //idk
+    sameSite: 'none',
+    secure: true
   });
-
+  
   return res
-    .status(200)
+    .status(200)   
     .json({ message: "success", user: existingUser, token });
 };
 
 const verifyToken = (req, res, next) => {
   const cookies = req.headers.cookie; //cookies in header stored will come here
   const token = cookies.split("=")[1]; //1st index after equals to
-  console.log(token);
   // console.log(cookies); //userid=token
   //   const headers = req.headers["authorization"];
   //   // verification below
@@ -109,7 +115,7 @@ const verifyToken = (req, res, next) => {
     //to send userid to getuser middleware we write req.id=user.id
     req.id = user.id; //req is an object
   });
-  next();//moving to next middleware which is getuser , see in userroutes
+  next(); //moving to next middleware which is getuser , see in userroutes
 };
 
 //getting user information after token verification
