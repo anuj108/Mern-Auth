@@ -3,7 +3,7 @@
 const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET_KEY = "dustin404";
+
 // req will we get from client, res will be sent from the server, next is used to move to the next middleware
 const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
   }
   //jwt.sign() function in jwt to generate token
 
-  const token = jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
+  const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: "35s",
   });
 
@@ -114,7 +114,7 @@ const verifyToken = (req, res, next) => {
     res.status(404).json({ message: "NO TOKEN FOUND" });
   }
   //verify function
-  jwt.verify(String(token), JWT_SECRET_KEY, (err, user) => {
+  jwt.verify(String(token), process.env.JWT_SECRET_KEY, (err, user) => {
     if (err) {
       return res.status(400).json({ message: "Invalid token" });
     }

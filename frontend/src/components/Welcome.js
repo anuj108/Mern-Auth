@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 // let firstRender=true;//using this in useEffect we want to have token in first go and refresh token in other
-axios.defaults.withCredentials = true;
 const Welcome = () => {
   const [user,setUser]=useState();
   // const refreshToken=async()=>{
@@ -12,6 +11,7 @@ const Welcome = () => {
   //   return data;
   // }
   const sendRequest=async()=>{
+    
     const res=await axios.get("http://localhost:5000/api/user",{
       withCredentials:true,
     })
@@ -19,8 +19,15 @@ const Welcome = () => {
       console.log(err);
     })
     const data=await res.data;
+    console.log(data);
     return data;
   };
+  
+  useEffect(() => {
+    sendRequest().then((data)=>setUser(data.user));
+    
+  }, [])
+
   // useEffect(() => {
   //   if(firstRender)
   //   {
