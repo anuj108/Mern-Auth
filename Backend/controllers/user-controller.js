@@ -73,8 +73,16 @@ const login = async (req, res, next) => {
   //jwt.sign() function in jwt to generate token
 
   const token = jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
-    expiresIn: "30s",
+    expiresIn: "35s",
   });
+
+  // console.log("genrated Token\n", token);
+
+  // if(req.cookies['$existingUser._id'])
+  // {
+  //   req.cookies['$existingUser._id']=""
+  // }
+
   res.cookie(String(existingUser._id), token, {
     // path: "/",
     // expires: new Date(Date.now() + 1000 * 30),
@@ -133,8 +141,46 @@ const getUser = async (req, res, next) => {
   return res.status(200).json({ user });
 };
 
+// const refreshToken=(req,res,next)=>{
+//   const cookies = req.headers.cookie; //cookies in header stored will come here
+//   const prevToken = cookies.split("=")[1]; //1st index after equals to
+//   if(!prevToken)
+//   {
+//     return res.status(400).json({message:"couldn't find token"})
+//   }
+//   jwt.verify(String(prevToken),JWT_SECRET_KEY,(err,user)=>{
+//     if(err)
+//     {
+//       console.log(err);
+//       return res.status(403).json({message:"Authentication failed"})
+//     }
+//     res.clearCookie('$user.id');
+//     req.cookies['${user.id']="";
+//     const token=jwt.sign({id:user.id},JWT_SECRET_KEY,{
+//       expiresIn:"35s"
+//     })
+//     console.log("Regenrated Token\n", token);
+//     res.cookie(String(user.id), token, {
+//       // path: "/",
+//       // expires: new Date(Date.now() + 1000 * 30),
+//       // if httponly is written , it will not be accesible to the frontend
+//       // httpOnly: true,
+//       // sameSite: "none", //idk
+//       path: '/',
+//       expires: new Date(Date.now() + 1000 * 30),
+//       httpOnly: true,
+//       sameSite: 'none',
+//       secure: true
+//     });
+
+//     req.id=user.id;
+//     next();
+//   })
+// }
+
 exports.signup = signup;
 exports.login = login;
 exports.verifyToken = verifyToken;
 exports.getUser = getUser;
+// exports.refreshToken = refreshToken;
 // left signup is the name from which it is been exported and right one is the name of the function variable declared above

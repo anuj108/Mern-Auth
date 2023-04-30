@@ -1,14 +1,29 @@
 import React,{useState} from "react";
 import { Box, Button, TextField, Typography } from '@mui/material';
-
+import axios from 'axios'
+import { useNavigate } from "react-router";
+axios.defaults.withCredentials = true;
 const Signup = () => {
   const [inputs, setInputs] = useState({
     name:"",
     email:"",
     password:"",
   })
+  const history = useNavigate();
+  const sendRequest=async()=>{
+    //post is an axios function which have two parameters url and the data (it is used to send http request)
+    const res=axios.post('http://localhost:5000/api/signup',{
+      name:inputs.name,
+      email:inputs.email,
+      password:inputs.password,
+    }).catch((err)=>console.log(err));
+    const data=await res.data;
+    return data;
+  }
+
     const handleSubmit=(e)=>{
       e.preventDefault();
+      sendRequest().then(()=>history("/login"));
       console.log(inputs);
     };
     const handleChange=(e)=>{

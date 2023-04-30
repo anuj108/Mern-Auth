@@ -1,11 +1,39 @@
-import React from 'react'
-import {Button} from "@mui/material"
-import {Link} from 'react-router-dom';
+import React,{useState,useEffect} from 'react'
+import axios from 'axios';
+// let firstRender=true;//using this in useEffect we want to have token in first go and refresh token in other
+axios.defaults.withCredentials = true;
 const Welcome = () => {
+  const [user,setUser]=useState();
+  // const refreshToken=async()=>{
+  //   const res=await axios.get("http://localhost:5000/api/refresh",{
+  //     withCredentials:true,
+  //   }).catch(err=>console.log(err));
+  //   const data=await res.data;
+  //   return data;
+  // }
+  const sendRequest=async()=>{
+    const res=await axios.get("http://localhost:5000/api/user",{
+      withCredentials:true,
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+    const data=await res.data;
+    return data;
+  };
+  // useEffect(() => {
+  //   if(firstRender)
+  //   {
+  //     firstRender=false;
+  //     sendRequest().then((data)=>setUser(data.user));
+  //   }
+  //   let interval=setInterval(() => {
+  //     refreshToken().then(data=>setUser(data.user))
+  //   }, 1000*29  );
+  //   return()=>clearInterval(interval)
+  // }, [])
   return (
-    <div>
-      <Button to="/logout" LinkedComponent={Link} variant="contained">Logout</Button>
-    </div>
+    <div>Welcome {user&&<h1>{user.name}</h1>}</div>
   )
 }
 
