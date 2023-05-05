@@ -93,7 +93,7 @@ const login = async (req, res, next) => {
     expires: new Date(Date.now() + 1000 * 30),
     httpOnly: true,
     sameSite: "lax",
-    // secure: true,
+    secure: true,
   });
 
   return res
