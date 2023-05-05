@@ -91,7 +91,7 @@ const login = async (req, res, next) => {
     // sameSite: "none", //idk
     path: "/",
     expires: new Date(Date.now() + 1000 * 30),
-    httpOnly: true,
+    // httpOnly: true,
     sameSite: "lax",
     secure: true,
   });
