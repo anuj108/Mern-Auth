@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store";
 axios.defaults.withCredentials = true;
 const Login = () => {
+  const dispatch=useDispatch();
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -27,7 +30,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendRequest().then(() => history("/user"));
+    sendRequest().then(() => dispatch(authActions.login())).then(()=>history("/user"));
     console.log(inputs);
   };
   const handleChange = (e) => {
