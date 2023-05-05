@@ -12,7 +12,7 @@ const Signup = () => {
   const history = useNavigate();
   const sendRequest=async()=>{
     //post is an axios function which have two parameters url and the data (it is used to send http request)
-    const res=axios.post('http://localhost:5000/api/signup',{
+    const res=axios.post('https://odd-teal-llama-garb.cyclic.app/api/signup',{
       name:inputs.name,
       email:inputs.email,
       password:inputs.password,

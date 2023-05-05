@@ -13,7 +13,7 @@ const Header = () => {
   const [value, setValue] = useState(0);
   const dispatch = useDispatch();
   const sendLogoutReq = async () => {
-    const res = await axios.post("http://localhost:5000/api/logout", null, {
+    const res = await axios.post("https://odd-teal-llama-garb.cyclic.app/api/logout", null, {
       withCredentials: true,
     });
     if (res.status === 200) {

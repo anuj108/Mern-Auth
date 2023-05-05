@@ -12,7 +12,7 @@ const Welcome = () => {
   // }
   const sendRequest=async()=>{
     
-    const res=await axios.get("http://localhost:5000/api/user",{
+    const res=await axios.get("https://odd-teal-llama-garb.cyclic.app/api/user",{
       withCredentials:true,
     })
     .catch((err)=>{

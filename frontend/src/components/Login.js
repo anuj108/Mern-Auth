@@ -19,7 +19,7 @@ const Login = () => {
       withCredentials: true
    })
      await axiosInstance
-      .post("http://localhost:5000/api/login", {
+      .post("https://odd-teal-llama-garb.cyclic.app/api/login", {
         email: inputs.email,
         password: inputs.password,
       },)
