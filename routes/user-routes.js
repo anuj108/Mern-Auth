@@ -21,6 +21,6 @@ const router = express.Router(); //router is a function imported
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/user", verifyToken, getUser);
-router.post("/logout",verifyToken,logout);
+router.post("/logout", verifyToken, logout);
 // router.get('/refresh',refreshToken,verifyToken,getUser)//refresh token
 module.exports = router;
