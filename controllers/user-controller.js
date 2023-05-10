@@ -91,8 +91,8 @@ const login = async (req, res, next) => {
     // sameSite: "none", //idk
     path: "/",
     expires: new Date(Date.now() + 1000 * 30),
-    // httpOnly: true,
-    sameSite: "lax",
+    httpOnly: true,
+    sameSite: "none",
     secure: true,
   });
 
@@ -123,11 +123,10 @@ const verifyToken = (req, res, next) => {
     // console.log(user);  //id: ,iat: ,exp:
     // console.log(req.id);  //undefined;
     //to send userid to getuser middleware we write req.id=user.id
-    console.log(user.id); 
+    console.log(user.id);
     console.log(req.id);
 
     req.id = user.id; //req is an object
-    
   });
   next(); //moving to next middleware which is getuser , see in userroutes
 };
